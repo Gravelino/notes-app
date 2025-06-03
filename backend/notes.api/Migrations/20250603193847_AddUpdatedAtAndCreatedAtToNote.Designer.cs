@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using notes.api.Data;
@@ -11,9 +12,11 @@ using notes.api.Data;
 namespace notes.api.Migrations
 {
     [DbContext(typeof(NotesDbContext))]
-    partial class NotesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250603193847_AddUpdatedAtAndCreatedAtToNote")]
+    partial class AddUpdatedAtAndCreatedAtToNote
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

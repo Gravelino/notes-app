@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using notes.api.Entities;
+using notes.api.Requests;
 using notes.api.Services;
 
 namespace notes.api.Controllers;
@@ -30,22 +31,26 @@ public class NotesController : Controller
     }
     
     [HttpPost]
-    public async Task<ActionResult<Guid>> CreateNote(Note note)
+    public async Task<ActionResult<Guid>> CreateNote(CreateNoteRequest request)
     {
-        var id = await _noteService.Create(note);
+        if (string.IsNullOrWhiteSpace(request.Title)) 
+            return BadRequest("Title is required");
+        
+        
+        var id = await _noteService.Create(request);
         return CreatedAtAction(nameof(GetNoteById), new {id}, id);   
     }
     
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateNote(Guid id, Note note)
+    public async Task<IActionResult> UpdateNote(Guid id, UpdateNoteRequest request)
     {
-        if (id != note.Id)
-            return BadRequest();
+        if (string.IsNullOrWhiteSpace(request.Title)) 
+            return BadRequest("Title is required");
         
         if(await _noteService.GetById(id) is null)
             return NotFound();
         
-        await _noteService.Update(id, note);
+        await _noteService.Update(id, request);
         return NoContent();  
     }
 

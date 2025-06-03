@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using notes.api.Data;
 using notes.api.Entities;
+using notes.api.Requests;
 
 namespace notes.api.Services;
 
@@ -13,23 +14,32 @@ public class NoteService: INoteService
         _context = context;
     }
 
-    public async Task<List<Note>> GetAll() => await _context.Notes.ToListAsync();
+    public async Task<List<Note>> GetAll() => await _context.Notes.OrderByDescending(n => n.UpdatedAt).ToListAsync();
     
     public async Task<Note?> GetById(Guid id) => await _context.Notes.FindAsync(id);
 
-    public async Task<Guid> Create(Note note)
+    public async Task<Guid> Create(CreateNoteRequest request)
     {
+        var note = new Note
+        {
+            Title = request.Title,
+            Content = request.Content,
+        };
+        
         await _context.Notes.AddAsync(note);
         await _context.SaveChangesAsync();
         return note.Id;
     }
 
-    public async Task Update(Guid id, Note note)
+    public async Task Update(Guid id, UpdateNoteRequest request)
     {
         var existingNote = await _context.Notes.FindAsync(id);
         if (existingNote is not null)
         {
-            _context.Notes.Update(note);
+            existingNote.Title = request.Title;
+            existingNote.Content = request.Content;
+            existingNote.UpdatedAt = DateTime.UtcNow;
+            
             await _context.SaveChangesAsync();
         }
     }

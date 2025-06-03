@@ -10,6 +10,20 @@ builder.Services.AddDbContext<NotesDbContext>(options =>
 
 builder.Services.AddScoped<INoteService, NoteService>();
 
+#region Add CORS
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+#endregion
+
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
@@ -24,6 +38,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
 

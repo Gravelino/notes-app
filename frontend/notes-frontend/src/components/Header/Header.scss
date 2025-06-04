@@ -1,0 +1,87 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.header {
+  background: rgba(240, 242, 245, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(200, 210, 220, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: $z-header;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $spacing-lg $spacing-md;
+    @include flex-between;
+
+    @include tablet {
+      padding: $spacing-lg $spacing-xl;
+    }
+  }
+
+  &__title {
+    color: #444;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+
+    @include tablet {
+      font-size: 2rem;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+  }
+}
+
+.language-selector {
+  display: flex;
+  background: rgba(190, 200, 210, 0.2);
+  border-radius: $border-radius-lg;
+  padding: $spacing-xs;
+}
+
+.language-btn {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  color: #555;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &.active {
+    background: rgba(180, 190, 210, 0.5);
+    color: #333;
+  }
+
+  &:hover:not(.active) {
+    background: rgba(180, 190, 210, 0.3);
+    color: #333;
+  }
+}
+
+.create-btn {
+  @include button-primary;
+  gap: $spacing-sm;
+  font-size: 1rem;
+  padding: $spacing-md $spacing-lg;
+
+  &__icon {
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+
+  &__text {
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}

@@ -40,11 +40,11 @@ The project consists of two main components:
 
 Detailed setup and development instructions are available in:
 
-* [Backend Documentation](./backend/README.md)
+* [Backend Documentation](./backend/notes.api/README.md)
   * API server setup
   * Database configuration
   * Development guidelines
-* [Frontend Documentation](./frontend/README.md)
+* [Frontend Documentation](./frontend/notes-frontend/README.md)
   * Client application setup
   * Testing procedures
   * Deployment instructions
